@@ -109,7 +109,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-row border">
-        <p>&copy; 2020 ABTransport. All Right Reserved</p>
+        <p>&copy; 2020 A to B Transport. All Right Reserved</p>
         <div className="footer-flex">
           <p>Developed By MBK</p>
         </div>

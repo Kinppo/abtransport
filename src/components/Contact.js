@@ -117,13 +117,31 @@ function Contact() {
   });
   const [popupState, setPopup] = useState("walo");
 
+  const handleSubmit = e => {
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact", ...contact })
+    })
+      .then(() => {
+        setPopup("sucess");
+      })
+      .catch(() => {
+        setPopup("error");
+      });
+
+    e.preventDefault();
+  };
   return (
     <Container>
       <h2>GET IN TOUCH WITH US</h2>
       <form
-        name="contact-form"
-        action="https://mailthis.to/office@abtransportteam.com"
+        name="contact"
         method="POST"
+        data-netlify="true"
+        data-netlify-honeypot="bot-field"
+        className="email-form"
+        onSubmit={handleSubmit}
       >
         <input type="hidden" name="form-name" value="contact" />
         <div className="inputs">

@@ -10,7 +10,7 @@ const IndexPage = () => {
   const [activeLink, setActiveLink] = useState(0);
   return (
     <Fragment>
-      <Seo title="home" />
+      <Seo title="A to B Transport" />
       <div id="hero">
         <Header activeLink={activeLink} setActiveLink={setActiveLink} />
         <Hero activeLink={activeLink} setActiveLink={setActiveLink} />

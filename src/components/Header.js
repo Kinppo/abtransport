@@ -104,7 +104,7 @@ const Header = ({ activeLink, setActiveLink }) => {
       <nav className="header-wrapper">
         <div className="header-item">
           <p className="logo">
-            <Link to="/">ABTransport</Link>
+            <Link to="/">A to B Transport</Link>
           </p>
         </div>
         <div className="header-item">
