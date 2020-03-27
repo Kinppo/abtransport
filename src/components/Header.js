@@ -1,93 +1,68 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Hamburger from "./Hamburger";
-import SideBar from "./SideBar";
+import React, { useEffect } from "react";
 import { Link } from "gatsby";
+import scrollTo from "gatsby-plugin-smoothscroll";
+import styled from "styled-components";
 const Container = styled.div`
   .header-wrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px 40px;
     position: fixed;
+    justify-content: space-around !important;
     z-index: 2;
     width: 100%;
+    padding: 0px 20px !important;
     transition: all 0.5s;
-  }
-  .nav-item {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    padding: 20px 0 0 2em;
+  }
+  .header-link {
+    padding: 35px 25px;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: all 0.5s;
+    transition-timing-function: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    background: transparent;
+    color: #fff;
+    &:hover {
+      color: #ff9677;
+    }
+  }
+  #active-link {
+    color: #ff9677;
   }
   .logo {
-    font-family: "Kalam", sans-serif;
-    margin-right: 60px;
-    font-size: 16px;
-    font-weight: 900;
-    position: relative;
-    transform: translateY(-1px);
-    color: #ff7533;
-    &:hover {
-      &:after {
-        transform: scaleX(0) !important;
-      }
-    }
+    font-weight: 600;
+    color: #ff9677;
   }
-  h5 {
+  .phone-number {
     font-size: 14px;
-    margin: 0px 20px;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 35px 0px;
-    position: relative;
-    &:after {
-      position: absolute;
-      width: 100%;
-      top: 92px;
-      display: block;
-      content: "";
-      transform: scaleX(0);
-      border-bottom: 3px solid #ff7533;
-      -webkit-transition: -webkit-transform 250ms ease-in-out;
-      transition: -webkit-transform 250ms ease-in-out;
-      transition: transform 250ms ease-in-out;
-      transition: transform 250ms ease-in-out;
-    }
-    &:hover {
-      &:after {
-        transform: scaleX(1);
-      }
-    }
+    font-weight: bold;
+    transform: translateY(3px);
+    width: 150px;
   }
-  button {
-    background: transparent;
-    padding: 7px 15px;
-    border-radius: 100px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    background: #ff7533 !important;
-    color: #f6f8fc;
-    margin-left: 10px;
-    transition: all 0.5s;
-    &:hover {
-      filter: brightness(110%);
-    }
+  .header-svg {
+    fill: #ff9677;
+    margin-right: 0.4em;
   }
-  .login {
-    padding: 7px 15px;
-    transition: all 0.4s;
-    &:hover {
-      color: #ff7533;
-      &:after {
-        transform: scaleX(0) !important;
-      }
-    }
-  }
-  .active-link {
-    border-bottom: 3px solid #ff7533;
+  .header-span {
+    position: absolute;
+    padding-bottom: 1em;
+    color: #ff9677;
+    white-space: nowrap;
   }
   .sticky-header {
-    background: #f6f8fc;
+    background: #fff;
     animation: animate 0.8s ease;
+    button {
+      color: #444;
+      &:hover {
+        color: #ff9677;
+      }
+    }
   }
   @keyframes animate {
     from {
@@ -97,38 +72,20 @@ const Container = styled.div`
       transform: translateY(0%);
     }
   }
-  .hamburger {
-    display: none;
-    margin-right: 2em;
-    margin-top: 2px;
-    &:hover {
-      color: #ff7533;
-      &:after {
-        transform: scaleX(0) !important;
-      }
-    }
-  }
-  @media only screen and (max-width: 825px) {
-    .nav-link {
+  @media only screen and (max-width: 900px) {
+    .header-link {
       display: none;
-    }
-    .hamburger {
-      display: block;
     }
     .header-wrapper {
-      padding: 0px 10px;
+      padding: 30px 20px !important;
+      justify-content: space-between !important;
     }
-    .logo {
-      margin-right: 20px;
-    }
-  }
-  @media only screen and (max-width: 460px) {
-    .login {
-      display: none;
+    .phone-number {
+      transform: translateY(5px);
     }
   }
 `;
-const Header = () => {
+const Header = ({ activeLink, setActiveLink }) => {
   useEffect(() => {
     window.onscroll = function() {
       myFunction();
@@ -142,40 +99,71 @@ const Header = () => {
       }
     }
   });
-  const [SideBarIsActive, toggleSideBar] = useState(false);
   return (
     <Container>
-      <div className="header-wrapper">
-        <div className="nav-item">
-          <h5
-            className="hamburger"
-            onClick={() => toggleSideBar(!SideBarIsActive)}
+      <nav className="header-wrapper">
+        <div className="header-item">
+          <p className="logo">
+            <Link to="/">ABTransport</Link>
+          </p>
+        </div>
+        <div className="header-item">
+          <button
+            onClick={() => {
+              scrollTo("#home");
+              setActiveLink(0);
+            }}
+            className={`header-link`}
+            id={activeLink === 0 ? "active-link" : ""}
           >
-            <Hamburger />
-          </h5>
-          <Link to="/">
-            <h5 className="logo">Linkroof</h5>
-          </Link>
-          <Link to="/">
-            <h5 className="active-link nav-link">Accueil</h5>
-          </Link>
-          <Link to="/Louer">
-            <h5 className="nav-link">Louer</h5>
-          </Link>
-          <Link to="/">
-            <h5 className="nav-link">Contact</h5>
-          </Link>
-          <Link to="/">
-            <h5 className="nav-link">Linkroof</h5>
-          </Link>
+            Home
+          </button>
+          <button
+            onClick={() => {
+              scrollTo("#services");
+              setActiveLink(1);
+            }}
+            className="header-link"
+            id={activeLink === 1 ? "active-link" : ""}
+          >
+            Services
+          </button>
+          <button
+            onClick={() => {
+              scrollTo("#contact");
+              setActiveLink(2);
+            }}
+            className="header-link"
+            id={activeLink === 2 ? "active-link" : ""}
+          >
+            Contact Us
+          </button>
+          <button
+            onClick={() => {
+              scrollTo("#footer");
+              setActiveLink(3);
+            }}
+            className="header-link"
+            id={activeLink === 3 ? "active-link" : ""}
+          >
+            Find Us
+          </button>
         </div>
-        <div className="nav-item">
-          <h5 className="login">Login</h5>
-          <button>+ Annoncer</button>
+        <div className="header-item phone-number">
+          <a href="tel:6124741806">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              height="20"
+              viewBox="0 0 24 24"
+              className="header-svg"
+            >
+              <path d="M20 22.621l-3.521-6.795c-.008.004-1.974.97-2.064 1.011-2.24 1.086-6.799-7.82-4.609-8.994l2.083-1.026-3.493-6.817-2.106 1.039c-7.202 3.755 4.233 25.982 11.6 22.615.121-.055 2.102-1.029 2.11-1.033z" />
+            </svg>
+            <span className="header-span">(612) 474-1806</span>
+          </a>
         </div>
-      </div>
-
-      <SideBar SideBarIsActive={SideBarIsActive} />
+      </nav>
     </Container>
   );
 };

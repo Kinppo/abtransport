@@ -1,14 +1,30 @@
-import React from "react";
-import Layout from "../templates/DefaultLayout";
+import React, { Fragment, useState } from "react";
 import Seo from "../components/seo";
-import Section from "../components/Section";
-
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Services from "../components/Services";
+import Hero from "../components/Hero";
+import Contact from "../components/Contact";
+import "../styles/app.scss";
 const IndexPage = () => {
+  const [activeLink, setActiveLink] = useState(0);
   return (
-    <Layout>
+    <Fragment>
       <Seo title="home" />
-      <Section />
-    </Layout>
+      <div id="hero">
+        <Header activeLink={activeLink} setActiveLink={setActiveLink} />
+        <Hero activeLink={activeLink} setActiveLink={setActiveLink} />
+      </div>
+      <div id="services">
+        <Services />
+      </div>
+      <div id="contact">
+        <Contact />
+      </div>
+      <div id="footer">
+        <Footer />
+      </div>
+    </Fragment>
   );
 };
 export default IndexPage;
